@@ -10,8 +10,6 @@ services:
       - /proc:/proc
     ports:
       - "8080:8080"
-    build:
-      context: "scaphandre"
   prometheus:
     image: prom/prometheus
     container_name: prometheus
@@ -24,5 +22,3 @@ services:
     container_name: grafana
     ports:
       - "3000:3000"
-    build:
-      context: "grafana"
