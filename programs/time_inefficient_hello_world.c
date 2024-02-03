@@ -2,13 +2,15 @@
 #include <unistd.h>
 
 int main() {
-// Loop to introduce delay
-for (int i = 0; i < 100; i++) {
-    sleep(1); // Sleep for 1 second
-}
+    // Loop to introduce delay
+    for (long i = 0; i < 1000000; i++) {
+        for (long j = 0; i < 1000000; j++) {
+            long test = i * j;
+            (void) test;
+        }
+        printf("%ld\n", i);
+    }
 
-// Print "Hello World" to the console
-printf("Hello World");
-return 0;
+    return 0;
 
 }

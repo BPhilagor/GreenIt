@@ -17,6 +17,16 @@ services:
     - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
     - "9090:9090"
+  process_monitor:
+    container_name: "process_monitor"
+    volumes:
+    - ./process_monitor/process_monitor.py:/etc/var/process_monitor.py
+    - /sys/class/powercap:/sys/class/powercap
+    - /proc:/proc
+    ports:
+    - "5001:5001"
+    build:
+      context: process_monitor
   grafana:
     image: grafana/grafana-enterprise
     container_name: grafana

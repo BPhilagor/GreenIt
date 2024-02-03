@@ -26,4 +26,4 @@ scrape_configs:
     # scheme defaults to 'http'.
 
     static_configs:
-      - targets: ["scaphandre:8080"]
+      - targets: ["scaphandre:8080", "process_monitor:5001"]
