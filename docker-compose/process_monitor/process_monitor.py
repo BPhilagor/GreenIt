@@ -5,25 +5,26 @@ app = Flask(__name__)
 
 def get_process_info(process_name):
     pid = subprocess.getoutput(f"pgrep -f {process_name}").splitlines()
-    print(pid)
     commands = list(map(lambda p: f"ps -p {p} -o %cpu,%mem", pid))
+    print("Process nbr:", len(commands))
+    print(commands)
     if len(commands) > 0:
         cpu_usage = 0.0
         mem_usage = 0.0
         for command in commands:
             stats = subprocess.getoutput(command).splitlines()
-            if len(stats) < 2:
-                continue
-            stats = stats[1].split()
-            cpu_usage += float(stats[0])
-            mem_usage += float(stats[1])
+            print(stats)
+            if len(stats) == 2:
+                stats_tab = stats[1].split()
+                cpu_usage += float(stats_tab[0])
+                mem_usage += float(stats_tab[1])
         return cpu_usage, mem_usage
     return None, None
 
 @app.route('/metrics')
 def metrics():
     cpu_usage, mem_usage = get_process_info("firefox")
-    if cpu_usage and mem_usage:
+    if cpu_usage != None and mem_usage != None:
         metrics = [
             f"# HELP process_cpu_usage CPU usage of the process",
             f"# TYPE process_cpu_usage gauge",
