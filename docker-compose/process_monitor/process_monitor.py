@@ -1,8 +1,8 @@
-from flask import Flask, Response
+from flask import Flask, Response, request, jsonify
 import subprocess
 
 app = Flask(__name__)
-program_name = "bad_hello"
+program_name = "prometheus"
 
 def get_process_info(process_name):
     pid = subprocess.getoutput(f"pgrep -f {process_name}").splitlines()
@@ -33,6 +33,17 @@ def metrics():
         ]
         return Response('\n'.join(metrics), mimetype='text/plain')
     return Response("Error: Process not found", status=404, mimetype='text/plain')
+
+@app.route('/program', methods=['POST'])
+def program():
+    global program_name
+    data = request.get_json()
+    if 'name' in data:
+        print(program_name)
+        program_name = data['name']
+        print(program_name)
+    return Response("OK\n", mimetype='text/plain')
+"""     return Response("Error: Process not found", status=404, mimetype='text/plain') """
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001)

@@ -18,14 +18,14 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 1,
+  "id": 2,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "e241379d-7fc4-43a2-9e59-a1e3fff5db31"
+        "uid": "${prometheus_source}"
       },
       "fieldConfig": {
         "defaults": {
@@ -84,12 +84,12 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
+        "h": 9,
         "w": 24,
         "x": 0,
         "y": 0
       },
-      "id": 2,
+      "id": 1,
       "options": {
         "legend": {
           "calcs": [],
@@ -106,15 +106,15 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "e241379d-7fc4-43a2-9e59-a1e3fff5db31"
+            "uid": "${prometheus_source}"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "process_cpu_usage{process=\"bad_hello\"}",
+          "expr": "process_cpu_usage",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
-          "legendFormat": "cpu",
+          "legendFormat": "cpu {{process}}",
           "range": true,
           "refId": "A",
           "useBackend": false
@@ -122,28 +122,28 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "e241379d-7fc4-43a2-9e59-a1e3fff5db31"
+            "uid": "${prometheus_source}"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "process_mem_usage{process=\"bad_hello\"}",
+          "expr": "process_mem_usage",
           "fullMetaSearch": false,
           "hide": false,
           "includeNullMetadata": true,
           "instant": false,
-          "legendFormat": "memory",
+          "legendFormat": "memory {{process}}",
           "range": true,
           "refId": "B",
           "useBackend": false
         }
       ],
-      "title": "CPU and Memory",
+      "title": "CPU and memory usage",
       "type": "timeseries"
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "e241379d-7fc4-43a2-9e59-a1e3fff5db31"
+        "uid": "${prometheus_source}"
       },
       "fieldConfig": {
         "defaults": {
@@ -170,8 +170,7 @@
             "lineWidth": 1,
             "pointSize": 5,
             "scaleDistribution": {
-              "log": 2,
-              "type": "log"
+              "type": "linear"
             },
             "showPoints": "auto",
             "spanNulls": false,
@@ -203,12 +202,12 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 9,
         "w": 24,
         "x": 0,
-        "y": 7
+        "y": 9
       },
-      "id": 1,
+      "id": 2,
       "options": {
         "legend": {
           "calcs": [],
@@ -225,11 +224,11 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "e241379d-7fc4-43a2-9e59-a1e3fff5db31"
+            "uid": "bacf66c9-3a24-4081-b76b-feda1c4fe292"
           },
           "disableTextWrap": false,
-          "editorMode": "code",
-          "expr": "scaph_process_power_consumption_microwatts{exe=\"bad_hello\"} / 1000000",
+          "editorMode": "builder",
+          "expr": "scaph_process_power_consumption_microwatts{exe=\"$program_name\"} / 1000000",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -239,7 +238,7 @@
           "useBackend": false
         }
       ],
-      "title": "Energy Consumption",
+      "title": "Energy consumption",
       "type": "timeseries"
     }
   ],
@@ -247,16 +246,53 @@
   "schemaVersion": 39,
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "prometheus",
+          "value": "bacf66c9-3a24-4081-b76b-feda1c4fe292"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "prometheus_source",
+        "options": [],
+        "query": "prometheus",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "prometheus",
+          "value": "prometheus"
+        },
+        "hide": 0,
+        "name": "program_name",
+        "options": [
+          {
+            "selected": true,
+            "text": "prometheus",
+            "value": "prometheus"
+          }
+        ],
+        "query": "prometheus",
+        "skipUrlSync": false,
+        "type": "textbox"
+      }
+    ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "GreenIT",
-  "uid": "e0cfd984-8d10-49bc-b289-4e2e4c7f1225",
-  "version": 1,
+  "uid": "a869194e-db67-487f-9717-f8b665bb8833",
+  "version": 3,
   "weekStart": ""
 }
